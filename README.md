@@ -1,6 +1,7 @@
 # Wearables + SDK Classification
 
-A comparison of XR and smart wearables (glasses, bands, rings) with a focus on
+A comparison of XR and smart wearables (glasses, watches, rings, bands, VR/MR
+headsets, earbuds, EEG headbands, AI pendants, CGM sensors) with a focus on
 **developer access**: does it have an SDK, what the SDK exposes, capabilities,
 price, ease of use, and how hard it is to build on.
 
@@ -35,6 +36,7 @@ price, ease of use, and how hard it is to build on.
 | **Apple Watch** (Series / Ultra) | Smartwatch | ✅ [watchOS SDK](https://developer.apple.com/watchos/) (Xcode) | Native on-device apps in Swift/SwiftUI. HealthKit (health/workout data), WorkoutKit, Core Motion, WatchConnectivity, complications, notifications. | HR, ECG, SpO₂, temp, GPS, fall/crash detect, cellular, rich apps. | ~$399+ (Series); Ultra ~$799 | 🟢 | 🟡 (Swift; needs Mac + Apple dev) |
 | **Samsung Galaxy Watch** (+ Ultra) | Smartwatch (Wear OS) | ✅ [Wear OS SDK](https://developer.android.com/training/wearables) + [Samsung Health Sensor/Data SDK](https://developer.samsung.com/health/) | Wear OS apps (Kotlin/Compose). Samsung Health **Sensor SDK** = raw BioActive sensor data (Watch4+); **Data SDK** = integrated health data across watch/ring/phone. | HR, ECG, BIA body comp, sleep apnea, GPS, apps. | ~$300+; Ultra ~$650 | 🟢 | 🟡 (Wear OS / Kotlin) |
 | **Garmin** (Forerunner / Fenix / etc.) | Sport / outdoor watch | ✅ [Connect IQ SDK](https://developer.garmin.com/connect-iq/) (Monkey C) | On-device apps in **Monkey C**: Watch Faces, Data Fields, Widgets, Device Apps, Audio providers. Sensor + ANT+ access; no garbage collector (predictable perf). | GPS, HR, multisport, maps, very long battery, big sensor set. | ~$200–1,000 | 🟢 | 🟡 (Monkey C, custom language) |
+| **Amazfit** (Zepp OS) | Smartwatch | ✅ [Zepp OS SDK](https://developer.zepp.com/) (JavaScript) | On-device **Mini Programs** + watch faces in JS. Sensor access, UI framework, app store. Lightweight, easy entry. | HR, SpO₂, GPS, sleep, long battery, cheap. 200+ community mini apps. | ~$50–300 | 🟢 | 🟢 (JavaScript, low barrier) |
 
 ---
 
@@ -62,6 +64,48 @@ price, ease of use, and how hard it is to build on.
 
 ---
 
+## VR / MR Headsets (head-worn)
+
+| Device | Type | SDK? (link) | What the SDK exposes | Key capabilities | Price (USD) | Ease of use | Dev difficulty |
+|---|---|---|---|---|---|---|---|
+| **Meta Quest 3 / 3S** | Standalone VR/MR headset | ✅ [Meta XR SDK](https://developers.meta.com/horizon/) (Unity/Unreal) + [OpenXR](https://developers.meta.com/horizon/downloads/package/oculus-openxr-mobile-sdk/) | Full XR stack via Presence Platform: hand/body tracking, color passthrough (MR), spatial anchors, scene understanding, controllers, eye/face (Pro). Unity, Unreal, native OpenXR, WebXR. | Color passthrough MR, 6DoF, hand tracking, big app store. | $299 (3S) / $499 (3) | 🟢 | 🟡 (Unity/Unreal, mature) |
+| **Apple Vision Pro** | Spatial computer headset | ✅ [visionOS SDK](https://developer.apple.com/visionos/) (Xcode) | Native apps in Swift/SwiftUI + RealityKit + ARKit. Hand + eye tracking, scene reconstruction, spatial windows/volumes, shared space. | 4K-per-eye micro-OLED, eye + hand input, passthrough MR, M-series chip. | ~$3,499 | 🟡 | 🔴 (Apple-only, RealityKit) |
+
+---
+
+## Hearables (smart earbuds)
+
+| Device | Type | SDK? (link) | What the SDK exposes | Key capabilities | Price (USD) | Ease of use | Dev difficulty |
+|---|---|---|---|---|---|---|---|
+| **Apple AirPods (Pro)** | Smart earbuds | ⚠️ Limited — [CMHeadphoneMotionManager](https://developer.apple.com/documentation/coremotion) / spatial audio APIs | No audio-stream SDK. You get head-tracking motion data (pitch/yaw/roll) and spatial-audio hooks from iOS. No custom on-device code. | ANC, spatial audio, head tracking, HR (some), hearing aid mode. | ~$179–249 | 🟢 | 🟡 (read-only motion; iOS gated) |
+
+---
+
+## Neuro / EEG headbands (brain-computer interface)
+
+| Device | Type | SDK? (link) | What the SDK exposes | Key capabilities | Price (USD) | Ease of use | Dev difficulty |
+|---|---|---|---|---|---|---|---|
+| **Muse (2 / S)** | EEG headband | ✅ [Muse SDK](https://choosemuse.com/pages/developers) | Raw EEG, accelerometer/gyro, PPG (HR), and signal-quality data to your own mobile/desktop app. Also LSL streaming. | 4-channel EEG, meditation/sleep tracking, HR, movement. | ~$250–400 | 🟢 | 🟡 (EEG signal processing) |
+| **Emotiv** (Insight / EPOC X) | EEG headset | ✅ [Cortex API](https://emotiv.gitbook.io/cortex-api) (JSON/WebSocket) | Real-time EEG streams, mental commands, facial expressions, motion, performance metrics. **Raw EEG needs a paid Premium license.** | 5–14 channel EEG, BCI mental commands, research-grade. | ~$299–999 | 🟡 | 🟡 (BCI; license for raw data) |
+
+---
+
+## AI wearables / lifeloggers
+
+| Device | Type | SDK? (link) | What the SDK exposes | Key capabilities | Price (USD) | Ease of use | Dev difficulty |
+|---|---|---|---|---|---|---|---|
+| **Limitless Pendant** | Clip-on AI recorder | ✅ [Limitless Developer API](https://www.limitless.ai/developers) (REST, API key) | **Cloud** API: fetch lifelogs (transcripts) with search + pagination, get by ID, read chats. MCP server available. 180 req/min. | Always-on audio capture, transcription, AI memory/summaries. | ~$99–199 (⚠️ Meta acquired Dec 2025 — discontinued to new buyers) | 🟢 | 🟢 (simple REST + key) |
+
+---
+
+## Medical / CGM (continuous glucose)
+
+| Device | Type | SDK? (link) | What the SDK exposes | Key capabilities | Price (USD) | Ease of use | Dev difficulty |
+|---|---|---|---|---|---|---|---|
+| **Dexcom G7** | Glucose sensor (CGM) | ✅ [Dexcom API v3](https://developer.dexcom.com/) (REST, OAuth 2.0) | **Cloud** API: glucose readings, trends, events, devices. ~1h delay (US). Sandbox with simulated data. Partner approval required. | Real-time continuous glucose, alerts, 10–15 day wear. | Prescription / pharmacy (varies) | 🟢 | 🟢 (REST/OAuth; approval + medical) |
+
+---
+
 ## Reference resources (not devices)
 
 | Resource | What it is | Link |
@@ -75,8 +119,10 @@ price, ease of use, and how hard it is to build on.
 
 - **Easiest to build on (glasses apps):** MentraOS (TypeScript, cross-brand, open source) and Even G2 (WebView/JS). Brilliant Labs Halo is best for fully open hardware + firmware.
 - **Easiest overall:** health wearables with cloud APIs — Oura, Whoop, Fitbit, Ultrahuman. Just REST + OAuth, read data, no hardware code.
-- **Watches** have the most mature on-device SDKs: Apple Watch (watchOS), Samsung/Wear OS, Garmin (Connect IQ).
-- **Most powerful / hardest:** XREAL Aura, Snap Spectacles, Rokid AR Studio — full spatial computing (Unity / Lens Studio / Android XR).
+- **Watches** have the most mature on-device SDKs: Apple Watch (watchOS), Samsung/Wear OS, Garmin (Connect IQ), Amazfit (Zepp OS, easiest — JavaScript).
+- **VR/MR headsets** are the richest XR targets: Meta Quest (Unity/Unreal/OpenXR) is the most accessible; Vision Pro is powerful but Apple-locked.
+- **Niche types with real SDKs:** EEG headbands (Muse, Emotiv), AI pendant (Limitless), glucose (Dexcom) — all mostly cloud/data APIs.
+- **Most powerful / hardest:** XREAL Aura, Snap Spectacles, Rokid AR Studio, Vision Pro — full spatial computing (Unity / Lens Studio / Android XR / RealityKit).
 - **Gesture / input SDKs:** Mudra Link and Meta Neural Band (EMG), plus hand-tracking on Snap and Rokid.
 - **Rings are mostly closed for apps:** you get cloud health data (Oura, Ultrahuman) or nothing. No real on-device ring app platform yet.
 - **No SDK yet:** Aivela Ring Pro, Even R1 (standalone), KiWear (planned).
@@ -105,4 +151,12 @@ price, ease of use, and how hard it is to build on.
 - Ultrahuman UltraSignal — https://www.ultrahuman.com/ultrasignal/
 - WHOOP developer — https://developer.whoop.com/
 - Fitbit Web API — https://dev.fitbit.com/
+- Amazfit / Zepp OS — https://developer.zepp.com/
+- Meta Quest / Horizon SDK — https://developers.meta.com/horizon/ · OpenXR — https://developers.meta.com/horizon/downloads/package/oculus-openxr-mobile-sdk/
+- Apple visionOS — https://developer.apple.com/visionos/
+- Apple Core Motion (AirPods) — https://developer.apple.com/documentation/coremotion
+- Muse SDK — https://choosemuse.com/pages/developers
+- Emotiv Cortex API — https://emotiv.gitbook.io/cortex-api
+- Limitless developer API — https://www.limitless.ai/developers
+- Dexcom developer API — https://developer.dexcom.com/
 - XR resource list — https://github.com/seckincengiz/XR
